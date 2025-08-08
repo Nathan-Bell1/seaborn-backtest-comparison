@@ -91,7 +91,7 @@ for i in range(n):
         else:
             print("Invalid or duplicate strategy. Try again.")
 
-df = yf.download('AAPL', period='1y', auto_adjust=True)
+df = yf.download('AAPL', period='2y', auto_adjust=True)
 df.columns = ['Open', 'High', 'Low', 'Close', 'Volume']
 
 cash, commission, margin = 1000000, 0.001, 1.0
@@ -104,27 +104,17 @@ for strat in chosen_strategies:
     print(f"Number of trades: {len(results[strat]._trades)}")
 
 buy_and_hold_equity = (df['Close'] / df['Close'].iloc[0]) * cash
-    
-while True:
-    try:
-        plot_choice = input("Would you like the simplified equity plot? (y/N): ")
-        break
-    except ValueError:
-        print("Invalid input. Please enter a valid integer.")
 
-if plot_choice in ["y", "Y", "yes", "Yes"]:
-    sns.set_theme(style="darkgrid")
+sns.set_theme(style="darkgrid")
 
-    plt.figure(figsize=(12, 6))
+plt.figure(figsize=(12, 6))
 
-    for name, result in results.items():
-        sns.lineplot(x=result._equity_curve.index, y=result._equity_curve['Equity'], label=strategies[name].display_name)
-    sns.lineplot(x=buy_and_hold_equity.index, y=buy_and_hold_equity.values, linestyle='--', label=f"Buy and Hold")
+for name, result in results.items():
+    sns.lineplot(x=result._equity_curve.index, y=result._equity_curve['Equity'], label=strategies[name].display_name)
+sns.lineplot(x=buy_and_hold_equity.index, y=buy_and_hold_equity.values, linestyle='--', label=f"Buy and Hold")
 
-    plt.title("Equity Curve Comparison with Buy and Hold")
-    plt.xlabel("Time")
-    plt.ylabel("Equity ($)")
-    plt.legend()
-    plt.show()
-elif plot_choice in ["n", "N", "no", "No"]:
-    bt.plot()
+plt.title("Equity Curve Comparison with Buy and Hold")
+plt.xlabel("Time")
+plt.ylabel("Equity ($)")
+plt.legend()
+plt.show()
