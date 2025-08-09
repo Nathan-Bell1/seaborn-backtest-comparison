@@ -1,4 +1,4 @@
-# # Compare Backtesting Trading Strategies with Seaborn
+# Compare Backtesting Trading Strategies with Seaborn
 
 ## Overview
 
