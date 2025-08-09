@@ -79,6 +79,7 @@ while True:
 print("\nAvailable strategies:")
 for strat in strategies.values():
     print(f" - {strat.display_name}")
+print("Please type the name of the stock(s) you wish to compare.")
 
 chosen_strategies = []
 for i in range(n):
